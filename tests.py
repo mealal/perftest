@@ -90,9 +90,11 @@ class BulkInsertTestTrial(PerfTestTrial):
         startTime = time.time()
         with Pool(processes=self.numThreads) as pool:
             bulkInsertFutures = [pool.apply_async(self.runTestTrialThread, ("thread" + str(i),)) for i in range(self.numThreads)]
-            for bulkInsertFuture in bulkInsertFutures:
+            #for bulkInsertFuture in bulkInsertFutures:
                 # print("Thread runtime: {} ".format(bulkInsertFuture.result()))
-                bulkInsertFuture.get()
+            #    bulkInsertFuture.get()
+            pool.close()
+            pool.join()
         self.runTime += (time.time() - startTime)
             # print("--------- {} Ran in {} seconds ---------".format(self.testName, str(self.runTime)))
 
